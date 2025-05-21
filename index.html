@@ -1,0 +1,245 @@
+  <!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Vault</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <?!= include('styles'); ?>    
+  </head>
+  <body>
+    <div id="loginWrapper">
+      <!-- Welcome Screen -->
+      <div id="welcomeScreen" class="welcome-screen">
+        <img id="welcome-logo" src="https://cdn-icons-png.flaticon.com/512/4221/4221419.png" alt="Welcome Logo">
+        <h1 id="welcome-title">Welcome to Movie Vault</h1>
+      </div>
+
+      <!-- Login Card -->
+      <div id="loginCard" class="login-card" style="display: none;">
+        <img src="https://cdn-icons-png.flaticon.com/512/4221/4221419.png" alt="Movie Vault" class="logo">
+        <h2>Movie Vault</h2>
+        <form id="loginForm">
+          <input type="email" id="gmail" placeholder="Enter Gmail" required>
+          <input type="password" id="password" placeholder="Enter Password" required style="margin-top: 1rem;">
+          <div class="message" id="message"></div>
+          <button type="submit" id="loginBtn" style="margin-top: 1rem;">Login</button>
+          <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
+            <a href="#" id="create">Create account</a>
+            <a href="#" id="forget">Forgot password?</a>
+          </div>
+        </form>
+        
+      </div>
+
+      <!-- Create Account Card -->
+      <div id="createCard" class="login-card" style="display: none;">
+        <img src="https://cdn-icons-png.flaticon.com/512/4221/4221419.png" alt="Movie Vault" class="logo">
+        <h2>Create Account</h2>
+        <form id="createForm">
+          <input type="email" id="createGmail" placeholder="Enter Gmail" required>
+          <input type="password" id="createPassword" placeholder="Enter Password" required style="margin-top: 1rem;">
+          <div class="message" id="createMessage"></div>
+          <button type="submit" id="createBtn" style="margin-top: 1rem;">Create Account</button>
+          <a href="#" id="backToLogin">Back to Login</a>
+        </form>
+      </div>
+
+      <!-- Forgot Password Card -->
+      <div id="forgetCard" class="login-card" style="display: none;">
+        <img src="https://cdn-icons-png.flaticon.com/512/4221/4221419.png" alt="Movie Vault" class="logo">
+        <h2>Recover Password</h2>
+        <form id="forgetForm">
+          <input type="email" id="forgetGmail" placeholder="Enter Gmail" required>
+          <div class="message" id="forgetMessage"></div>
+          <div class="reset-instructions" style="margin-top: 1rem; font-size: 0.9rem; color: #aaa; text-align: left;">
+            Enter your email address and we'll send you instructions to reset your password.
+          </div>
+          <button type="submit" id="forgetBtn" style="margin-top: 1rem;">Send Recovery Email</button>
+          <a href="#" id="forgetBackToLogin">Back to Login</a>
+        </form>
+      </div>
+    </div>
+
+
+    
+
+
+
+    <!-- Main App Container -->
+    <div id="appContainer" class="app-container" style="display: none;">
+      <header>
+        <div class="logo">
+          <img src="https://cdn-icons-png.flaticon.com/512/4221/4221419.png" class="logo-img" alt="Movie Vault Logo">
+          <h1 id="name">Movie Vault</h1>
+        </div>
+        <div class="header-actions">
+          <button id="addNewBtn" class="btn-primary">
+            <i class="material-icons">add</i> Add New
+          </button>
+          <button id="logoutBtn" class="btn-secondary">
+            <i class="material-icons">logout</i> Logout
+          </button>
+        </div>
+      </header>
+      
+      <main>
+        <div id="listView" class="view">
+          <div class="filters">
+            <div class="search-box">
+              <i class="material-icons">search</i>
+              <input type="text" id="searchInput" placeholder="Search by name...">
+            </div>
+            <button id="filterToggleBtn" class="btn-secondary filter-toggle-btn">
+              <i class="material-icons">filter_list</i> Filters
+            </button>
+          </div>
+          <div id="activeFilters" class="active-filters"></div>
+          <div id="advancedFilters" class="advanced-filters hidden">
+            <div class="filter-grid">
+              <div class="filter-group">
+                <label class="filter-section-title">Rating</label>
+                <div class="range-filter">
+                  <input type="number" id="minRating" min="0" max="10" step="0.5" placeholder="Min" class="filter-input">
+                  <span>to</span>
+                  <input type="number" id="maxRating" min="0" max="10" step="0.5" placeholder="Max" class="filter-input">
+                </div>
+              </div>
+
+              <div class="filter-group">
+                <label class="filter-section-title">Watched Status</label>
+                <div class="radio-group">
+                  <div class="radio-container">
+                    <input type="radio" name="watched" id="filterWatchedAll" checked>
+                    <label for="filterWatchedAll">All</label>
+                  </div>
+                  <div class="radio-container">
+                    <input type="radio" name="watched" id="filterWatched">
+                    <label for="filterWatched">Watched</label>
+                  </div>
+                  <div class="radio-container">
+                    <input type="radio" name="watched" id="filterNotWatched">
+                    <label for="filterNotWatched">Not Watched</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="filter-group">
+                <label class="filter-section-title">Downloaded Status</label>
+                <div class="radio-group">
+                  <div class="radio-container">
+                    <input type="radio" name="downloaded" id="filterDownloadedAll" checked>
+                    <label for="filterDownloadedAll">All</label>
+                  </div>
+                  <div class="radio-container">
+                    <input type="radio" name="downloaded" id="filterDownloaded">
+                    <label for="filterDownloaded">Downloaded</label>
+                  </div>
+                  <div class="radio-container">
+                    <input type="radio" name="downloaded" id="filterNotDownloaded">
+                    <label for="filterNotDownloaded">Not Downloaded</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="filter-actions">
+              <button id="applyFiltersBtn" class="btn-primary">Apply Filters</button>
+              <button id="resetFiltersBtn" class="btn-secondary">Reset Filters</button>
+            </div>
+          </div>
+          <div id="mediaGrid" class="media-grid">
+            <!-- Media cards will be generated here -->
+          </div>
+        </div>
+
+        <div id="detailView" class="view hidden">
+          <div class="detail-container">
+            <div class="detail-header">
+              <h2 id="detailTitle" class="detail-title"></h2>
+              <div class="detail-actions">
+                <button id="backToListBtn" class="btn-secondary">
+                  <i class="material-icons">arrow_back</i> Back to List
+                </button>
+                <button id="editEntryBtn" class="btn-primary">
+                  <i class="material-icons">edit</i> Edit
+                </button>
+                <button id="deleteEntryBtn" class="btn-danger">
+                  <i class="material-icons">delete</i> Delete
+                </button>
+              </div>
+            </div>
+            <div id="detailContent" class="detail-content">
+              <!-- Detail content will be populated here -->
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Form Modal -->
+      <div id="formModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="modalTitle">Add New Entry</h2>
+            <span class="modal-close">&times;</span>
+          </div>
+          <div class="modal-body">
+            <form id="mediaForm">
+              <div class="form-group">
+                <label for="mediaName">Name <span class="required">*</span></label>
+                <input type="text" id="mediaName" required>
+              </div>
+
+              <div class="form-group">
+                <label for="mediaType">Type <span class="required">*</span></label>
+                <select id="mediaType" required>
+                  <option value="Movie">Movie</option>
+                  <option value="Series">Series</option>
+                  <option value="Anime">Anime</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="mediaRating">Rating</label>
+                <input type="number" id="mediaRating" min="0" max="10" step="0.5">
+              </div>
+
+              <div class="form-group checkbox-group">
+                <div class="checkbox-container">
+                  <input type="checkbox" id="mediaDownloaded">
+                  <label for="mediaDownloaded">Downloaded</label>
+                </div>
+
+                <div class="checkbox-container">
+                  <input type="checkbox" id="mediaWatched">
+                  <label for="mediaWatched">Watched</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="mediaPoster">Poster URL</label>
+                <input type="url" id="mediaPoster" placeholder="https://example.com/poster.jpg">
+              </div>
+
+              <div class="form-group">
+                <label for="mediaSeasons">Seasons</label>
+                <input type="number" id="mediaSeasons" min="0">
+              </div>
+
+              <input type="hidden" id="mediaId">
+
+              <div class="form-actions">
+                <button type="button" id="cancelFormBtn" class="btn-secondary">Cancel</button>
+                <button type="submit" id="saveFormBtn" class="btn-primary">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <?!= include('scripts'); ?>
+    
+  </body>
+</html>
